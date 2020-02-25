@@ -38,12 +38,12 @@ for example lines on bar chart
 
 | **Name/Link** | **Description** | **License** | **Status** | **Comments** |
 | -- | -- | -- | -- | -- |
-| [TSTool](http://opencdss.state.co.us/opencdss/statedmi/) | Time series processing and visualization software. | GPL v3 | Active. | Application developed by OWF for the State of Colorado. |
+| [TSTool](http://opencdss.state.co.us/opencdss/tstool/) | Time series processing and visualization software. | GPL v3 | Active | Application developed by OWF for the State of Colorado. |
 
 ## Inventory of JavaScript Tools ##
 
 | **Name/Link** | **Description** | **License** | **Status** | **OWF Repo** | **Comments** |
-| -- | -- | -- | -- | -- |
+| -- | -- | -- | -- | -- | -- |
 | [canvasJS](https://canvasjs.com/) | | Commercial | Active | [owf-lib-viz-canvasjs-js](https://github.com/OpenWaterFoundation/owf-lib-viz-canvasjs-js) | |
 | [c3.js](https://c3js.org/) | | MIT | Active | [owf-lib-viz-c3-js](https://github.com/OpenWaterFoundation/owf-lib-viz-c3-js) | |
 | [Chart.js](https://www.chartjs.org/) | | MIT | Active | [owf-lib-viz-chart-js](https://github.com/OpenWaterFoundation/owf-lib-viz-chart-js) | |
