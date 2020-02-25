@@ -3,11 +3,11 @@
 This repository contains an inventory of time series visualization tools that
 the Open Water Foundation (OWF) has evaluated for use in software applications.
 The technologies are grouped by language, with focus on web application tools.
-Separate repositories have been created when a library has been reviewed in more detail.
+Separate repositories have been created when a tool has been reviewed in more detail.
 
 * [Time Series Graphing Requirements](#time-series-graphing-requirements)
-* [Inventory - Application](#inventory-application)
-* [Inventory - JavaScript](#inventory-javascript)
+* [Inventory of Applications](#inventory-of-applications)
+* [Inventory of JavaScript Tools](#inventory-of-javascript-tools)
 * [Additional Repositories](#additional-repositories)
 
 ---
@@ -20,27 +20,30 @@ The following are typical requirements for time series graphing tools:
 * handle different data interval (timestep) including minute, hour, day, month, year,
 and also plot at irregular (sparse) date/time
 * access data in standard formats such as CSV and JSON
-* handle missing data values, for example blank in CSV or `NaN` in data, and gap in line graph
-(don't connect line across missing value)
-* display multiple time series on a graph
+* handle missing data values, for example blank cell in CSV or `NaN` in data
+	+ display as gap in line graph (don't connect line across missing value)
 * display time series in different forms (point/symbol, line, bar, area, stacked area)
+	+ bars positioned so right edge is interval-ending date/time for value
+* display multiple time series on a graph, possibly using different graph style,
+for example lines on bar chart
 * provide mouse tracker to display time series values
 * allow zoom and panning
 * display intelligent date/time and numerical data axis labels, even when graph has been zoomed
 * annotate graph with text, points, lines, or other shapes
 * provide properties to customize the graph, including symbol style, font, etc.
 * good performance even for large datasets (multiple years of data)
+* ability to save graph as image file (png, etc.)
 
-## Inventory - Application ##
+## Inventory of Applications ##
 
 | **Name/Link** | **Description** | **License** | **Status** | **Comments** |
-| -- | -- | -- | -- |
+| -- | -- | -- | -- | -- |
 | [TSTool](http://opencdss.state.co.us/opencdss/statedmi/) | Time series processing and visualization software. | GPL v3 | Active. | Application developed by OWF for the State of Colorado. |
 
-## Inventory - JavaScript ##
+## Inventory of JavaScript Tools ##
 
 | **Name/Link** | **Description** | **License** | **Status** | **OWF Repo** | **Comments** |
-| -- | -- | -- | -- |
+| -- | -- | -- | -- | -- |
 | [canvasJS](https://canvasjs.com/) | | Commercial | Active | [owf-lib-viz-canvasjs-js](https://github.com/OpenWaterFoundation/owf-lib-viz-canvasjs-js) | |
 | [c3.js](https://c3js.org/) | | MIT | Active | [owf-lib-viz-c3-js](https://github.com/OpenWaterFoundation/owf-lib-viz-c3-js) | |
 | [Chart.js](https://www.chartjs.org/) | | MIT | Active | [owf-lib-viz-chart-js](https://github.com/OpenWaterFoundation/owf-lib-viz-chart-js) | |
