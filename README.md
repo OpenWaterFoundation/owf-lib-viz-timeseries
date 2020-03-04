@@ -21,8 +21,9 @@ which may be provided at various levels by different visualization libraries and
 * handle typical time series datasets consisting of date/time, value, and possibly flag
 	+ useful to standardize on [ISO 8601 date/time formats](https://en.wikipedia.org/wiki/ISO_8601)
 	+ also need to handle date/time formats commonly used in software such as Excel
-* handle different data interval (timestep) including minute, hour, day, month, year,
-and also plot at irregular (sparse) date/time
+* handle different data interval (timestep)
+	+ regular interval minute, hour, day, month, year and multiples such as 15 minute
+	+ irregular (sparse) data at various date/time precision
 	+ ideally use data values with date/time at precision that is appropriate,
 	for example `YYYY-MM-DD` for daily data and `YYYY-MM` for monthly data
 	+ if different interval are displayed on the same graph,
@@ -30,7 +31,7 @@ and also plot at irregular (sparse) date/time
 * access data in standard formats such as CSV and JSON
 	+ specifying metadata for time series is a challenge for formats such as CSV
 		- see: http://learn.openwaterfoundation.org/owf-learn-csv/csv-syntax/#metadata-and-schema
-		- see [TSTool `WriteTableToDelimitedFile`] command `OutputSchemaFile` parameter](http://opencdss.state.co.us/tstool/latest/doc-user/command-ref/WriteTableToDelimitedFile/WriteTableToDelimitedFile/)
+		- see [TSTool `WriteTableToDelimitedFile` command `OutputSchemaFile` parameter](http://opencdss.state.co.us/tstool/latest/doc-user/command-ref/WriteTableToDelimitedFile/WriteTableToDelimitedFile/)
 * handle missing data values, for example blank cell in CSV or `NaN` in data files
 	+ display as gap in line graph (don't connect line across missing value)
 	+ display as empty cell in tabular view
@@ -57,7 +58,7 @@ possibly allow zooming and panning by interacting with the overview
 	date/times that are less precise (e.g., `YYYY-MM`)
 	+ see TSTool intelligent labeling, which changes as the graph is zoomed
 	+ see the [Options for Intelligent Axis Labeling](#options-for-intelligent-axis-labeling) below
-* annotate graph with text, points, lines, or other shapes
+* annotate graph with text, points, lines, and other shapes
 * provide properties to customize the graph, including symbol style, font, etc.
 * good performance even for large datasets (multiple years of data)
 	+ examples in repositories listed in the inventory typically use small and large datasets
@@ -75,10 +76,12 @@ at all zoom levels
 * are rounded to reasonable values (e.g., example numbers ending in 0, 00, 000)
 and date/times that are reasonably spaced (e.g., evenly divisible by common date/time intervals)
 * maximize use of the visual space to display data (minimize whitespace)
+	+ but generally keep y-axis labels constant as data are paged/scrolled
+	unless user rescales labels
 * avoid axis label orientation that is difficult to quickly read
-	* horizontal labels are easier to read
-	* vertical labels are more difficult to read
-	* angled labels are most difficult to read
+	+ horizontal labels are easier to read
+	+ vertical labels are more difficult to read
+	+ angled labels are most difficult to read
 * labels should clearly be associated with data, for example using ticks or grid lines
 * if the graph is zoomed, the labels should adjust intelligently
 
@@ -90,25 +93,27 @@ Determining labels is impacted by:
 	+ width and precision for numbers (e.g., `123.1234`), which depends on data units and value limits
 	+ precision of date/time labels for data being displayed
 
-The following are possible approaches that may be used by graphing packages in order to achieve optimal labeling.
+The following are possible approaches that may be used by graphing packages in order to achieve intelligent labeling.
 In each case it is assumed that the tool has been passed the time series data in a consumable form.
 
-1. Tool handles labeling, at various levels of configurability:
+1. Tool handles intelligent labeling with little application coding:
 	1. The tool labels axes intelligently at all zoom levels, with no additional configuration.
-	2. The tool provides configuration properties to help with labeling, such as number of labels desired,
+2. Tool handles labeling via various levels of property configuration, perhaps without achieving optimal labeling:
+	1. The tool provides configuration properties to help with labeling, such as number of labels desired,
 	format for date-time, etc., in a general way.
-	3. The tool provides configuration properties for more granular control of labels,
+	2. The tool provides configuration properties for more granular control of labels,
 	for example, specifying date/time format for different zoom level
-2. Tool relies on application code to determine label values, but the tool draws the labels:
+3. Tool relies on application code to determine label values, but the tool draws the labels:
 	1. At each change that requires a redraw,
 	the tool calls application code to determine the label values,
 	for example passing the maximum and minimum data values to be labeled.
-	2. Display properties are configured as in (1).
-3. Tool relies on application code to determine label values and draw the labels:
+	2. Display properties are configured as in (2).
+4. Tool relies on application code to determine label values and draw the labels:
 	1. At each change that requires a redraw,
 	the tool calls application code to determine the label values and draw the labels.
-	2. This requires that the graphical objects such as canvas and available area for labels are passed to application code.
-	3. Display properties may be configured as in (1).
+	2. This requires that the graphical objects such as canvas and available area for labels are passed to application code
+	and application code must understand how to render (draw) graphics.
+	3. Display properties may be configured as in (2).
 
 ## Inventory of Applications ##
 
