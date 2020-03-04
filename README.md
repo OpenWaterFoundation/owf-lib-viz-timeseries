@@ -71,6 +71,11 @@ possibly allow zooming and panning by interacting with the overview
 Labeling the axes of a time series graph can be challenging.
 The goals of labeling are:
 
+* clearly label graphs and avoid confusion
+	+ for example label agrees with data value at the label/tick/grid
+	+ for date/time it may in some cases be useful to display labels that span an interval,
+	for examplea month name might be displayed spanning tick/grid for that month,
+	rather than the tick/grid
 * display a reasonable number of labels that are not squished together or are too far apart,
 at all zoom levels
 * are rounded to reasonable values (e.g., example numbers ending in 0, 00, 000)
