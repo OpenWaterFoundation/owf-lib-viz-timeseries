@@ -141,7 +141,7 @@ Work at the Open Water Foundation related to time series visualization often use
 2. If necessary, convert the product description file to a template.
 	1. Replace specific identifiers with properties such as `${StationId}`.
 3. Use the time series product file for visualization in production tools.
-	1. Use the [`ProcessTSProduct`](http://opencdss.state.co.us/tstool/latest/doc-user/command-ref/ProcessTSProduct/ProcessTSProduct/) commmand) in TSTool to automate processing.
+	1. Use the [`ProcessTSProduct`](http://opencdss.state.co.us/tstool/latest/doc-user/command-ref/ProcessTSProduct/ProcessTSProduct/) commmand in TSTool to automate processing.
 	This will recognize properties and will replace `${Property}` strings.
 	2. Use the JSON file with web applications by mapping general configuration properties to the graphing tool
 	used in the web application, typically using a function to map configuration properties.
@@ -192,7 +192,8 @@ Actual implementation will depend on tool functionality.
 
 | **Function** | **Description** |
 | -- | -- |
-| `findLabels()` | Given input from the charting package, determine the labels for an axis, needed when the graphing tool is not able to intelligently determine axis labels for various zoom levels.  For example, the charting package may provide height and width of plot area (pixels), font size for axis labels, data limits, and desired minimum and maximum number of labels.  The function would then use the graphics output information to size labels to fit the area, with "nice" labels such as appropriate date/times or numbers.  For example, see the [`findLabels`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GR/GRAxis.java) and `findLogLabels` (same `GRAxis.java` code) and functions used by TSTool, which do not consider graphics.  See the [`computeLabels()`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GRTS/TSGraph.java) function, which uses the `findLabels` and `findLogLabels` functions and considers graphics. |
+| `translateConfigurationProperties` | Translate standard graph configuration properties to graphing tool properties.  See discussion in previous section. |
+| `findLabels` | Given input from the charting package, determine the labels for an axis, needed when the graphing tool is not able to intelligently determine axis labels for various zoom levels.  For example, the charting package may provide height and width of plot area (pixels), font size for axis labels, data limits, and desired minimum and maximum number of labels.  The function would then use the graphics output information to size labels to fit the area, with "nice" labels such as appropriate date/times or numbers.  For example, see the [`findLabels`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GR/GRAxis.java) and `findLogLabels` functions (same `GRAxis.java` code) used by TSTool, which do not consider graphics.  See the [`computeLabels`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GRTS/TSGraph.java) function, which calls the `findLabels` and `findLogLabels` functions and considers graphics. |
 
 ## Inventory of Applications ##
 
