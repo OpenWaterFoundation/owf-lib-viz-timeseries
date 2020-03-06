@@ -7,6 +7,9 @@ Separate repositories have been created when a tool has been reviewed in more de
 
 * [Time Series Graphing Requirements](#time-series-graphing-requirements)
 	+ [Options for Intelligent Axis Labeling](#options-for-intelligent-axis-labeling)
+* [Standard Graph Configuration Propewrties](#standard-graph-configuration-properties)
+* [Standard Utility Functions](#standard-utility-functions)
+* [Inventory of Graph Configuration Propewrties](#inventory-of-graph-configuration-properties)
 * [Inventory of Applications](#inventory-of-applications)
 * [Inventory of JavaScript Tools](#inventory-of-javascript-tools)
 * [Additional Repositories](#additional-repositories)
@@ -120,11 +123,77 @@ In each case it is assumed that the tool has been passed the time series data in
 	and application code must understand how to render (draw) graphics.
 	3. Display properties may be configured as in (2).
 
+## Standard Graph Configuration Propewrties ##
+
+It is useful to configure time series graphs using standard configuration properties,
+regardless of the technology being used.
+The TSTool software developed by OWF provides advanced features for time series graphing
+as described in the [TSView Appendix](http://opencdss.state.co.us/tstool/latest/doc-user/appendix-tsview/tsview/).
+Work at the Open Water Foundation often uses the following approach:
+
+1. Prototype the graph in TSTool:
+	1. Use TSTool features to access and process time series data.
+	2. After graphing the time series from the main interface, edit graph properties by right-clicking on the graph
+	and saving to a time series product file.
+		1. Save as a legacy `*.tsp` file to use with TSTool.
+		2. Save as a JSON file to use with other tools such as web applications.
+2. If necessary, convert the product description file to a template.
+	1. Replace specific identifiers with properties such as `${StationId}`.
+3. Use the time series product file for visualization in production tools.
+	1. Use the [`ProcessTSProduct`](http://opencdss.state.co.us/tstool/latest/doc-user/command-ref/ProcessTSProduct/ProcessTSProduct/) commmand) in TSTool to automate processing.
+	2. Use the JSON file with web applications by mapping general configuration properties to the graphing tool
+	used in the web application, typically using a function to map configuration properties.
+
+Configuration properties used by TSTool should be mapped to the specific tool by implementing a standard function,
+for example `translateConfigurationProps()`, which has the following functionality:
+
+1. Able to handle TSTool JSON time series product configuration file.
+2. Able to handle the configuration properties for the specific tool,
+generally a dictionary.
+3. Able to reset specific properties from TSTool properties to the tool's properties.
+4. Able translate property values containing `${PropertyName}` to an expanded property value.
+	1. For example, pass a specific station identifier as a list of dynamic properties that
+	will be expanded.
+
+The TSTool [TSView Appendix](http://opencdss.state.co.us/tstool/latest/doc-user/appendix-tsview/tsview/) lists graph properties
+and is not repeated here.
+Each charting tool that uses TSTool graph configuration files should implement a table
+such as the following in its documentation, to describe mapping and issues.
+If a charting package provides properties and features that are not supported by TSTool,
+then TSTool can be updated.
+The following is an example of such a table.
+
+* `product` properties will only be used of a visualization supports multiple graphs on a "page",
+and correspond to the `product` element in JSON.
+* `subproduct` properties correspond to a graph.
+* `data` properties correspond to time series for a graph.
+
+In the following, `XXXX` would be replaced by the tool name.
+
+| **Property Scope** | **Standard Property** | **XXXX Property** | **Default** | **Comments** |
+| -- | -- | -- | -- | -- |
+| product | `MainTitleString` | `xxx` | Indicate if known. | Comments here if relevant. |
+| product | `TotalHeight` | `xxx` | | Use to size the graph, pixels. |
+| product | `TotalWidth` | `xxx` | | Use to size the graph, pixels. |
+| graph | `MainTitleString` | `xxx` | | Comments here if relevant.  |
+| data | `Color` | `xxx` | | For example auto-sequence.  |
+| data | `Symbol` | `xxx` | | For example auto-select.  |
+
+## Standard Utility Functions ##
+
+As discussed above, there may be a need to implement standard utility functions for a charting package.
+The following table provides guidance on naming and functionality, in order to promote consistent functionality.
+Actual implementation will depend on tool functionality.
+
+| **Function** | **Description** |
+| -- | -- |
+| `findLabels()` | Given input from the charting package, determine the labels for an axis, needed when the graphing tool is not able to intelligently determine axis labels for various zoom levels.  For example, the charting package may provide height and width of plot area (pixels), font size for axis labels, data limits, and desired minimum and maximum number of labels.  The function would then use the graphics output information to size labels to fit the area, with "nice" labels such as appropriate date/times or numbers.  For example, see the [`findLabels`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GR/GRAxis.java)`) and `findLogLabels` (same `GRAxis.java` code) and functions used by TSTool, which do not consider graphics.  See the [`computeLabels()`](https://github.com/OpenCDSS/cdss-lib-common-java/blob/master/src/RTi/GRTS/TSGraph.java) function, which uses the `findLabels` and `findLogLabels` functions and considers graphics. |
+
 ## Inventory of Applications ##
 
 | **Name/Link** | **Description** | **License** | **Status** | **Comments** |
 | -- | -- | -- | -- | -- |
-| [TSTool](http://opencdss.state.co.us/opencdss/tstool/) | Time series processing and visualization software. | GPL v3 | Active | Application developed by OWF for the State of Colorado. |
+| [TSTool](http://opencdss.state.co.us/opencdss/tstool/) | Time series processing and visualization software. | GPL v3 | Active | Application developed by OWF for the State of Colorado for time series processing and visualization, serves as a reference due to extensive functionality. |
 
 ## Inventory of JavaScript Tools ##
 
